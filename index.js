@@ -20,9 +20,28 @@ const profess = {
     },
     toBeEqual: function(assertion) {
         if (this._value === assertion) {
-            this._log(assertion, "equals", true);
+            this._log(assertion, `${this._value} equals ${assertion}`, true);
         } else {
-            this._log(assertion, "equals", false);
+            this._log(
+                assertion,
+                `${this._value} to be equal ${assertion}`,
+                false
+            );
+        }
+        return this;
+    },
+
+    toMatchTypes: function(assertion) {
+        if (typeof this._value !== typeof assertion) {
+            this._log(
+                assertion,
+                `value to have the type "${typeof assertion}", got "${typeof this._value}" instead`
+            );
+        } else {
+            this._log(
+                assertion,
+                ` value has the correct type "${typeof assertion}"`
+            );
         }
         return this;
     },
@@ -30,13 +49,11 @@ const profess = {
     _log: function(assertion, action, result) {
         if (result) {
             this._totalSuccess !== "undefined" ? this._totalSuccess++ : 1;
-            this._result.push(`Success: ${this._value} ${action} ${assertion}`);
+            this._result.push(`Success: ${action}`);
             return this._success++;
         } else {
             this._totalFail !== "undefined" ? this._totalFail++ : 1;
-            this._result.push(
-                `Fail: Expected ${assertion}, got ${this._value}`
-            );
+            this._result.push(`Fail: Expected ${action}`);
             return this._fail++;
         }
     },
@@ -68,7 +85,9 @@ const profess = {
             this._totalFail = this._totalFail || 0;
             this._totalSuccess = this._totalSuccess || 0;
             const total = this._totalSuccess + this._totalFail;
-            console.log(`Total test suites: ${this._totalSuits}. Ran ${total} tests`);
+            console.log(
+                `Total test suites: ${this._totalSuits}. Ran ${total} tests`
+            );
             console.log(`Failed ${this._totalFail} tests`);
             console.log(`Passed ${this._totalSuccess} tests`);
             if (this._totalFail === 0 && this._totalSuccess) {
@@ -77,7 +96,7 @@ const profess = {
                 console.log("No tests were provided");
             } else {
                 console.log(
-                    `${((total - this._totalFail) / total * 100).toFixed(2)}% test were successful`
+                    `${((total - this._totalFail) / total * 100).toFixed(2)}% tests were successful`
                 );
             }
         } else {
@@ -111,6 +130,7 @@ profess
     .want(true)
     .toBeEqual(false)
     .test();
+profess.suite("Checking types").want(100).toMatchTypes("text").test();
 
 profess.suite("another suite").want(0).toBeEqual(0).test();
 
