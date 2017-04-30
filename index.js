@@ -11,7 +11,7 @@ const profess = {
         this._result = [];
         this._fail = 0;
         this._success = 0;
-        this._totalSuits !== "undefined" ? this._totalSuits++ : 0;
+
         return this;
     },
     want: function(value) {
@@ -41,6 +41,7 @@ const profess = {
         }
     },
     test: function() {
+        this._totalSuits !== "undefined" ? this._totalSuits++ : 0;
         if (!this._description) {
             this._description = "Unnamed suite";
         }
@@ -59,6 +60,7 @@ const profess = {
             this._success = 0;
             this._description = "";
         }
+        return this;
     },
 
     result: function() {
@@ -66,8 +68,9 @@ const profess = {
             this._totalFail = this._totalFail || 0;
             this._totalSuccess = this._totalSuccess || 0;
             const total = this._totalSuccess + this._totalFail;
-            console.log(`Total test suites: ${this._totalSuits}`);
-            console.log(`Ran ${total} tests`);
+            console.log(`Total test suites: ${this._totalSuits}. Ran ${total} tests`);
+            console.log(`Failed ${this._totalFail} tests`);
+            console.log(`Passed ${this._totalSuccess} tests`);
             if (this._totalFail === 0 && this._totalSuccess) {
                 console.log("100% tests were successful, you are good");
             } else if (!this._totalFail && !this._totalSuccess) {
@@ -95,6 +98,18 @@ profess
     .toBeEqual(3)
     .want("aaa")
     .toBeEqual("aaa")
+    .test();
+
+profess
+    .suite("weird integer testing")
+    .want(1)
+    .toBeEqual(1)
+    .want(42)
+    .toBeEqual(42)
+    .test()
+    .suite("add more odd testing")
+    .want(true)
+    .toBeEqual(false)
     .test();
 
 profess.suite("another suite").want(0).toBeEqual(0).test();
