@@ -30,6 +30,26 @@ profess.result();
 
 ## Tests:  
 
+#### Fast checking:  
+`profess.fast(value)(expectedValue)`  
+```
+profess.fast(100)(100)
+```   
+result:
+```
+Fast checking:
+100 equals 100
+type = "number"
+```
+profess.fast(2)("2")
+```  
+result:
+```
+Fast checking:
+2 equals 2 but types are different: 2 is not of the type string as it should be
+```
+_note that you do not need suite() or anything else to perform fast checking_
+
 #### Equality with type checking:  
 `toBeEqual(value)`  
 ```

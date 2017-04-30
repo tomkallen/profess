@@ -104,6 +104,21 @@ const profess = {
                 "Coverage was not intiated. Run `profess.withCoverage()` before tests"
             );
         }
+    },
+    fast: function(value){
+        return function(assertion){
+            console.log("\nFast checking:");
+            if(value === assertion){
+                console.log(`${value} equals ${assertion}`);
+                console.log(`type = "${typeof value}"\n`);
+                return;
+            }
+            if (value == assertion){
+                console.log(`${value} equals ${assertion} but types are different: ${value} is not of the type ${typeof assertion} as it should be\n`);
+                return;
+            }
+            console.log(`${value} is not equal ${assertion}\n`);
+        }
     }
 };
 
@@ -136,3 +151,8 @@ profess.suite("another suite").want(0).toBeEqual(0).test();
 
 profess.want(x).toBeEqual(y).test();
 profess.result();
+
+profess.fast(2)(4);
+profess.fast(2)("2");
+profess.fast(false)(false);
+profess.fast(100)(100);
