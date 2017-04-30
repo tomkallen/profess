@@ -48,12 +48,12 @@ result:
 Fast checking:
 2 equals 2 but types are different: 2 is not of the type string as it should be
 ```
-_note that you do not need suite() or anything else to perform fast checking_
+_note that you do not need suite() or anything else to perform fast checking_  
 
 #### Equality with type checking:  
 `toBeEqual(value)`  
 ```
-profess.want(1).toBeEqual(2).test(); // fail
+profess.want(1).toBeEqual(2).test(); // fail  
 ```  
 
 #### Type matching:  
