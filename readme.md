@@ -5,32 +5,27 @@
 
 ```
 profess
-    .suite("weird integer testing")
-    .want(1)
-    .toBeEqual(1)
+    .suite("weird integer testing") // add suite to describe your tests
+    .want(1).toBeEqual(1)
+    .want(42).toBeEqual(42)
+    .test() // close suit by running test() method
 
-    .want(42)
-    .toBeEqual(42)
-
-    .test()
-
-    .suite("add more odd testing")
-    .want(true)
-    .toBeEqual(false)
+    .suite("add more odd testing") // you can chain as much suits as you want
+    .want(true).toBeEqual(false)
     .test()
 ```
 
-### add global coverage info to your tests:  
+### add global coverage info to your tests (optional):  
 
 ```
 profess.withCoverage();
-///run your tests here
+    // run your tests or suits here
 profess.result();
 ```
 
 ## Tests:  
 
-#### Fast checking:  
+#### 0. Fast checking:  
 `profess.fast(value)(expectedValue)`  
 ```
 profess.fast(100)(100);
@@ -49,27 +44,28 @@ result:
 Fast checking:
 2 equals 2 but types are different: 2 is not of the type string as it should be
 ```  
-note that you do not need suite() or anything else to perform fast checking  
+Note that you do not need suite() or anything else to perform fast checking  
+Keep in mind that fast tests are not recorded by `withCoverage()` method  
 
-#### Equality with type check:  
+#### 1. Equality with type check:  
 `toBeEqual(value)`  
 ```
 profess.want(1).toBeEqual(2).test(); // fail  
 ```  
 
-#### Type matching:  
+#### 2. Type matching check:  
 `toMatchTypes(value)`  
 ```
 const test = "Some string";
 profess.want("testing this").toMatchTypes(test).test(); // Pass
 ```  
-#### Range check:  
+#### 3. Range check:  
 `toBeInRange(min, max)`  
 ```
 const value = 1337;
 profess.want(value).toBeInRange(42, 9001).test(); // Pass
 ```  
-#### Existence check:  
+#### 4. Existence check:  
 `toExist()`  
 ```
 let doesNotExist;
@@ -77,7 +73,7 @@ profess
     .want(0).toExist() // Pass
     .want(null).toExist() // Pass
     .want('').toExist() // Pass
-    .want(doesNotExist).toExist()  // Fail
+    .want(doesNotExist).toExist() // Fail
     .test()
 ```  
-note that this is not a _falsy_ test  
+Note that this is not a _falsy_ test  
