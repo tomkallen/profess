@@ -81,12 +81,12 @@ const profess = {
     toBe: {
         Function: function() {
             if (typeof this._value === "function") {
-            //    this._typeCheckSuccess("function");
+            this._typeCheckSuccess(profess, "function");
             } else {
             //    this._typeCheckFail("function");
             }
             return this;
-        }.bind(this)
+        }
     },
 
     _typeCheckSuccess(T) {
@@ -110,6 +110,15 @@ const profess = {
             this._result.push(`Fail: Expected ${action}`);
             return this._fail++;
         }
+    },
+    absolute: function(assertion){
+        if(Object.is(this._value, assertion)){
+            this._log(null, `${this._value} and ${assertion} are the same`, true);
+        }
+        else {
+            this._log(null,`${this._value} and ${assertion} to have the same value`, false)
+        }
+        return this
     },
     test: function() {
         this._totalSuits !== "undefined" ? this._totalSuits++ : 0;
@@ -178,6 +187,8 @@ const profess = {
     }
 };
 
+profess.toBe.Function = profess.toBe.Function.bind(profess);
+
 const x = 100;
 const y = 100;
 
@@ -216,8 +227,12 @@ profess
     .toExist()
     .want(doesNotExist)
     .toExist()
-    //.want(fun)
-    //.toBe.Function()
+    .want(fun)
+    .toBe.Function()
+    .want(-0)
+    .toBeEqual(+0)
+    .want(-0)
+    .absolute(+0)
     .test();
 profess.suite("Checking types").want(100).toMatchTypes("text").test();
 

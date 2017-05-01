@@ -77,3 +77,14 @@ profess
     .test()
 ```  
 Note that this is not a _falsy_ test  
+
+#### 5. Absolute comparison:  
+`absolute(value)`  
+```
+profess
+    .want(-0)
+    .toBeEqual(+0) // Pass
+    .want(-0)
+    .absolute(+0)
+    .test() // Fail
+```
