@@ -78,6 +78,28 @@ const profess = {
         return this;
     },
 
+    toBe: {
+        Function: function() {
+            if (typeof this._value === "function") {
+            //    this._typeCheckSuccess("function");
+            } else {
+            //    this._typeCheckFail("function");
+            }
+            return this;
+        }.bind(this)
+    },
+
+    _typeCheckSuccess(T) {
+        this._log(null, `value is a ${typeof this._value}`, true);
+    },
+    _typeCheckFail(T) {
+        this._log(
+            null,
+            `value to be ${T}, got ${typeof this._value} instead`,
+            false
+        );
+    },
+
     _log: function(assertion, action, result) {
         if (result) {
             this._totalSuccess !== "undefined" ? this._totalSuccess++ : 1;
@@ -184,6 +206,7 @@ profess
     .toBeInRange(0, 55)
     .test();
 let doesNotExist;
+const fun = function() {};
 profess
     .want(0)
     .toExist()
@@ -193,6 +216,8 @@ profess
     .toExist()
     .want(doesNotExist)
     .toExist()
+    //.want(fun)
+    //.toBe.Function()
     .test();
 profess.suite("Checking types").want(100).toMatchTypes("text").test();
 
