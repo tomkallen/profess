@@ -31,15 +31,25 @@ const profess = {
         }
         return this;
     },
-    toBeInRange: function(min, max){
-        if (typeof min !== "number" || typeof max !== "number"){
-            throw new Error("toBeInRange() method requires two numerical arguments");
+
+    toBeInRange: function(min, max) {
+        if (typeof min !== "number" || typeof max !== "number") {
+            throw new Error(
+                "toBeInRange() method requires two numerical arguments"
+            );
         }
         if (this._value >= min && this._value <= max) {
-            this._log(null, `value ${this._value} is in range [${min}-${max}]`, true);
-        }
-        else {
-            this._log(null, `value ${this._value} to be in range ${min}-${max}`, false);
+            this._log(
+                null,
+                `value ${this._value} is in range [${min}-${max}]`,
+                true
+            );
+        } else {
+            this._log(
+                null,
+                `value ${this._value} to be in range ${min}-${max}`,
+                false
+            );
         }
         return this;
     },
@@ -55,6 +65,15 @@ const profess = {
                 assertion,
                 `value has the correct type "${typeof assertion}"`
             );
+        }
+        return this;
+    },
+
+    toExist: function() {
+        if (typeof this._value !== "undefined") {
+            this._log(null, `value exists and equals ${this._value}`, true);
+        } else {
+            this._log(null, `value to exist but it is not defined yet`, false);
         }
         return this;
     },
@@ -118,20 +137,22 @@ const profess = {
             );
         }
     },
-    fast: function(value){
-        return function(assertion){
+    fast: function(value) {
+        return function(assertion) {
             console.log("\nFast checking:");
-            if(value === assertion){
+            if (value === assertion) {
                 console.log(`${value} equals ${assertion}`);
                 console.log(`type = "${typeof value}"\n`);
                 return;
             }
-            if (value == assertion){
-                console.log(`${value} equals ${assertion} but types are different: ${value} is not of the type ${typeof assertion} as it should be\n`);
+            if (value == assertion) {
+                console.log(
+                    `${value} equals ${assertion} but types are different: ${value} is not of the type ${typeof assertion} as it should be\n`
+                );
                 return;
             }
             console.log(`${value} is not equal ${assertion}\n`);
-        }
+        };
     }
 };
 
@@ -154,12 +175,24 @@ profess
     .want(42)
     .toBeEqual(42)
     .test()
-
     .suite("add more testing")
     .want(true)
     .toBeEqual(false)
-    .want(30).toBeInRange(20, 55)
-    .want(x).toBeInRange(0,55)
+    .want(30)
+    .toBeInRange(20, 55)
+    .want(x)
+    .toBeInRange(0, 55)
+    .test();
+let doesNotExist;
+profess
+    .want(0)
+    .toExist()
+    .want(null)
+    .toExist()
+    .want("")
+    .toExist()
+    .want(doesNotExist)
+    .toExist()
     .test();
 profess.suite("Checking types").want(100).toMatchTypes("text").test();
 

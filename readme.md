@@ -51,7 +51,7 @@ Fast checking:
 ```  
 note that you do not need suite() or anything else to perform fast checking  
 
-#### Equality with type checking:  
+#### Equality with type check:  
 `toBeEqual(value)`  
 ```
 profess.want(1).toBeEqual(2).test(); // fail  
@@ -68,4 +68,16 @@ profess.want("testing this").toMatchTypes(test).test(); // Pass
 ```
 const value = 1337;
 profess.want(value).toBeInRange(42, 9001).test(); // Pass
+```  
+#### Existence check:  
+`toExist()`  
 ```
+let doesNotExist;
+profess
+    .want(0).toExist() // Pass
+    .want(null).toExist() // Pass
+    .want('').toExist() // Pass
+    .want(doesNotExist).toExist()  // Fail
+    .test()
+```  
+note that this is not a _falsy_ test  
