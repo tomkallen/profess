@@ -33,7 +33,7 @@ profess.result();
 #### Fast checking:  
 `profess.fast(value)(expectedValue)`  
 ```
-profess.fast(100)(100)
+profess.fast(100)(100);
 ```   
 
 result:
@@ -61,5 +61,11 @@ profess.want(1).toBeEqual(2).test(); // fail
 `toMatchTypes(value)`  
 ```
 const test = "Some string";
-profess.want("testing this").toMatchTypes(test).test() // Pass
+profess.want("testing this").toMatchTypes(test).test(); // Pass
 ```  
+#### Range check:  
+`toBeInRange(min, max)`  
+```
+const value = 1337;
+profess.want(value).toBeInRange(42, 9001).test(); // Pass
+```
