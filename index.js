@@ -1,5 +1,6 @@
 const profess = {
     withCoverage: function() {
+        // statistical data for all the suite
         this._totalFail = 0;
         this._totalSuccess = 0;
         this._covered = true;
@@ -30,6 +31,18 @@ const profess = {
         }
         return this;
     },
+    toBeInRange: function(min, max){
+        if (typeof min !== "number" || typeof max !== "number"){
+            throw new Error("toBeInRange() method requires two numerical arguments");
+        }
+        if (this._value >= min && this._value <= max) {
+            this._log(null, `value ${this._value} is in range [${min}-${max}]`, true);
+        }
+        else {
+            this._log(null, `value ${this._value} to be in range ${min}-${max}`, false);
+        }
+        return this;
+    },
 
     toMatchTypes: function(assertion) {
         if (typeof this._value !== typeof assertion) {
@@ -40,7 +53,7 @@ const profess = {
         } else {
             this._log(
                 assertion,
-                ` value has the correct type "${typeof assertion}"`
+                `value has the correct type "${typeof assertion}"`
             );
         }
         return this;
@@ -141,9 +154,12 @@ profess
     .want(42)
     .toBeEqual(42)
     .test()
-    .suite("add more odd testing")
+
+    .suite("add more testing")
     .want(true)
     .toBeEqual(false)
+    .want(30).toBeInRange(20, 55)
+    .want(x).toBeInRange(0,55)
     .test();
 profess.suite("Checking types").want(100).toMatchTypes("text").test();
 
