@@ -194,12 +194,12 @@ const profess = {
         if (this._result.length === 0) {
             return console.log(`no tests provided for ${this._description}`);
         } else {
-            console.log(`\nResults for ${this._description}:`);
+            console.log(`\n%cResults for ${this._description}:`, 'color: orange');
             for (let test of this._result) {
                 console.log(test);
             }
-            console.log(`Failed tests: ${this._fail}`);
-            console.log(`Successful tests: ${this._success}`);
+            console.log(`%cFailed tests: ${this._fail}`, 'color:red');
+            console.log(`%cSuccessful tests: ${this._success}`, 'color:green');
             console.log(`-----`);
             this._result = [];
             this._fail = 0;
