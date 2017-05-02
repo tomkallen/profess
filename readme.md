@@ -74,7 +74,7 @@ profess
     .want(null).toExist() // Pass
     .want('').toExist() // Pass
     .want(doesNotExist).toExist() // Fail
-    .test()
+    .test();
 ```  
 Note that this is not a _falsy_ test  
 
@@ -82,9 +82,18 @@ Note that this is not a _falsy_ test
 `absolute(value)`  
 ```
 profess
-    .want(-0)
-    .toBeEqual(+0) // Pass
-    .want(-0)
-    .absolute(+0)
-    .test() // Fail
+    .want(-0).toBeEqual(+0) // Pass
+    .want(-0).absolute(+0) // Fail
+    .test();
+```  
+
+#### 6. Type check:  
+`toBe.<Type>()`  
+`<Type>`  — Function, String, Number, Boolean, Null, Undefined  
+```
+profess
+    .want(1).toBe.Number() // Pass
+    .want("bob").toBe.String() // Pass
+    .want(null).toBe.Function() // Fail
+    .test();
 ```
