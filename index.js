@@ -46,15 +46,13 @@ const profess = {
             return this;
         }
         let equal = true;
-        const flatten = function flatten(arr) {
-            return arr.reduce(
+        const flatten = arr =>
+            arr.reduce(
                 (f, i) => f.concat(Array.isArray(i) ? flatten(i) : i),
                 []
             );
-        }
 
         if (Array.isArray(this._value)) {
-
             const A = flatten(this._value);
             const B = flatten(assertion);
 
@@ -64,7 +62,11 @@ const profess = {
             if (equal) {
                 this._log(null, `arrays are deep equal`, true);
             } else {
-                this._log(null, `arrays to be deep equal but they are not`);
+                this._log(
+                    null,
+                    `arrays to be deep equal but they are not`,
+                    false
+                );
             }
             return this;
         }
