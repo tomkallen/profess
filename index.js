@@ -52,6 +52,33 @@ const profess = {
                 []
             );
 
+        const isObjectEqual = (obj1, obj2) => {
+            for (let p in obj1) {
+                if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
+                    return false;
+                }
+
+                if (typeof (obj1[p]) === 'object') {
+                    if (!isObjectEqual(obj1[p], obj2[p])) {
+                        return false;
+                    }
+                } else {
+                    if (obj1[p] !== obj2[p]) {
+                        return false;
+                    }
+                }
+            }
+
+            for (let p in obj2) {
+                if (typeof (obj1[p]) === 'undefined') {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
         if (Array.isArray(this._value)) {
             const A = flatten(this._value);
             const B = flatten(assertion);
@@ -65,6 +92,17 @@ const profess = {
                 this._log(
                     null,
                     `arrays to be deep equal but they are not`,
+                    false
+                );
+            }
+            return this;
+        } else if (this._value !== null && typeof this._value === 'object') {
+            if(isObjectEqual(this._value, assertion)) {
+               this._log(null, `objects are deep equal`, true);
+            } else {
+                this._log(
+                    null,
+                    `objects to be deep equal but they are not`,
                     false
                 );
             }
