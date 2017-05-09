@@ -46,6 +46,10 @@ profess
     .toBeDeepEqual([1, 2, 3, [4, 5, [6, null]]])
     .want([1, 2, 3, [4, 5, "catlady"]])
     .toBeDeepEqual([1, 2, 3, [4, 5, "catlady"]])
+    .want({ one: 1, two: { one: 1, two: 2 } })
+    .toBeDeepEqual({ one: 1, two: { one: 1, two: 2 } })
+    .want({ one: 1, two: 2 })
+    .toBeDeepEqual({ one: 'one', two: 2 })
     .test();
 profess.suite("Checking types").want(100).toMatchTypes("text").test();
 
