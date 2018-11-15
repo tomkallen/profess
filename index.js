@@ -28,7 +28,7 @@ const profess = {
 
   toBeDeepEqual (assertion) {
     if (this._value.length !== assertion.length || typeof this._value !== typeof assertion) {
-      this._log(null, 'values to be deep equal but they are of different type', false)
+      this._log(null, 'values to be deep equal but they are of different types', false)
       return this
     }
     let equal = true
@@ -100,12 +100,12 @@ const profess = {
       this._compareTypes('boolean')
       return this
     },
-    Null () {
-      this._compareTypes('null')
-      return this
-    },
     Undefined () {
       this._compareTypes('undefined')
+      return this
+    },
+    Object (){
+      this._compareTypes('object')
       return this
     }
   },
@@ -167,7 +167,7 @@ const profess = {
         console.log(`${((total - this._totalFail) / total * 100).toFixed(2)}% tests were successful`)
       }
     } else {
-      console.log('Coverage was not intiated. Run `profess.withCoverage()` before tests')
+      console.log('Coverage was not initiated. Run `profess.withCoverage()` before tests')
     }
   },
 
@@ -180,7 +180,7 @@ const profess = {
         return
       }
       if (value == assertion) {
-        console.log(`${value} equals ${assertion} but types are different: ${value} is not of the type ${typeof assertion} as it should be\n`)
+        console.log(`${value} equals ${assertion} but types are different: ${value} is not of the type ${typeof assertion}\n`)
         return
       }
       console.log(`${value} is not equal ${assertion}\n`)
