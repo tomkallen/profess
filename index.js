@@ -1,9 +1,19 @@
 const profess = {
-  withCoverage () {
+  withStats () {
     this._totalFail = 0
     this._totalSuccess = 0
     this._covered = true
     this._totalSuits = 0
+    return this
+  },
+
+  stopOnError () {
+    this._strict = true
+    return this
+  },
+
+  passOnError () {
+    this._strict = false
     return this
   },
 
@@ -52,8 +62,7 @@ const profess = {
       if (equal) this._log(null, `arrays are deep equal`, true)
       else this._log(null, `arrays to be deep equal but they are not`, false)
       return this
-    }
-    else if (this._value !== null && typeof this._value === 'object') {
+    } else if (this._value !== null && typeof this._value === 'object') {
       if (isObjectEqual(this._value, assertion)) this._log(null, `objects are deep equal`, true)
       else this._log(null, `objects to be deep equal but they are not`, false)
       return this
@@ -104,7 +113,7 @@ const profess = {
       this._compareTypes('undefined')
       return this
     },
-    Object (){
+    Object () {
       this._compareTypes('object')
       return this
     }
@@ -123,6 +132,10 @@ const profess = {
     } else {
       this._totalFail !== 'undefined' ? this._totalFail++ : 1
       this._result.push(`Fail: Expected ${action}`)
+      if (this._strict) {
+        console.log(this._result[0])
+        throw new Error('Testing stopped on first error encountered')
+      }
       return this._fail++
     }
   },
